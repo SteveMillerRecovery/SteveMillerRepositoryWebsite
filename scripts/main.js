@@ -1,5 +1,6 @@
 // Auto copyright year
 document.getElementById('copyright-year').textContent = new Date().getFullYear();
+var SHOW_PRICES = false;
 
 // Mobile menu toggle
 (function () {
@@ -51,6 +52,18 @@ document.getElementById('copyright-year').textContent = new Date().getFullYear()
         });
       }
     });
+  });
+})();
+
+(function () {
+  document.body.classList.toggle('hide-prices', !SHOW_PRICES);
+  var servicesPricingHeading = document.getElementById('services-pricing-heading');
+  if (servicesPricingHeading) {
+    servicesPricingHeading.textContent = SHOW_PRICES ? 'Programs and Pricing' : 'Programs';
+  }
+  if (SHOW_PRICES) return;
+  document.querySelectorAll('.plan-select-btn').forEach(function (button) {
+    button.setAttribute('data-plan-price', '');
   });
 })();
 

@@ -27,6 +27,23 @@ Tip: Use **Find** to jump to the right place:
 
 ---
 
+## Price Visibility Toggle (Code Only)
+
+Price visibility is controlled in `scripts/main.js` with:
+
+```js
+var SHOW_PRICES = true;
+```
+
+- Set `SHOW_PRICES` to `true` to show prices normally.
+- Set `SHOW_PRICES` to `false` to hide visible prices on service cards.
+- When `SHOW_PRICES` is `false`, price details are also removed from:
+  - the selected plan summary text
+  - the direct email (`mailto`) body
+  - hidden form price fields submitted with the contact form
+
+---
+
 ## How to Update the Prices
 
 All prices are in `index.html` under the **Services** section.
@@ -177,14 +194,14 @@ If your new logo is named something else (example: `logo-2026.jpg`), you must up
 
 ## How to Update the Main Photo (Portrait)
 
-The portrait shown in the “Let’s Connect” section is:
+The portrait shown in the “About Me” section is:
 
 - `images/steve.JPG`
 
 In `index.html`, the portrait is referenced like this:
 
 ```html
-<img class="contact-portrait" src="images/steve.JPG" alt="Steve Miller" />
+<img class="about-portrait" src="images/steve.JPG" alt="Steve Miller" />
 ```
 
 To replace it, follow the same steps as the logo:
