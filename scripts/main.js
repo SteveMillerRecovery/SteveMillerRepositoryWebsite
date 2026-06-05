@@ -90,6 +90,8 @@ var SHOW_PRICES = false;
   var nameInput = document.getElementById('contact-name');
   var emailInput = document.getElementById('contact-email-input');
   var messageInput = document.getElementById('contact-message');
+  var reachingForInput = document.getElementById('contact-reaching-for');
+  var preferredContactInput = document.getElementById('contact-preferred-contact');
   var messageHiddenInput = document.getElementById('contact-message-hidden');
   var submitButton = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
   var submitTargetFrame = document.getElementById('contact-form-target');
@@ -184,29 +186,51 @@ var SHOW_PRICES = false;
 
   function getFieldValue(input) {
     if (!input) return '';
-    return input.value.trim();
+    return safeTrim(input.value);
+  }
+
+  function getSupportNeedDescription(fallback) {
+    return getFieldValue(messageInput) || fallback || 'Not provided';
+  }
+
+  function getReachingForDescription(fallback) {
+    return getFieldValue(reachingForInput) || fallback || 'Not provided';
+  }
+
+  function getPreferredContactDescription(fallback) {
+    return getFieldValue(preferredContactInput) || fallback || 'Not provided';
+  }
+
+  function buildContactSummaryLines(fallbacks) {
+    fallbacks = fallbacks || {};
+    return [
+      '- Plan: ' + getSelectedPlanDescription(),
+      '- Add-On: ' + getSelectedAddOnDescription(),
+      '- What are you looking for support with?: ' + getSupportNeedDescription(fallbacks.supportNeed),
+      '- Are you reaching out for yourself or someone you care about?: ' + getReachingForDescription(fallbacks.reachingFor),
+      '- Preferred contact method: ' + getPreferredContactDescription(fallbacks.preferredContact)
+    ];
   }
 
   function buildMailtoHref() {
     var recipientAddress = getRecipientAddress();
     var senderName = getFieldValue(nameInput);
     var senderEmail = getFieldValue(emailInput);
-    var senderMessage = getFieldValue(messageInput);
     var subjectPlan = selectedPlan.name || 'Recovery Support';
     var subject = 'Question about ' + subjectPlan;
     var bodyLines = [
       'Hi Steve,',
       '',
-      'I was interested in getting more info on this plan:',
-      '- Plan: ' + getSelectedPlanDescription(),
-      '- Add-On: ' + getSelectedAddOnDescription(),
+      'I was interested in getting more info on this support:',
+      buildContactSummaryLines({
+        supportNeed: '[Describe what kind of support you need]',
+        reachingFor: '[Myself or someone I care about]',
+        preferredContact: '[Select your preferred contact method]'
+      }).join('\n'),
       '',
       'My details:',
       '- Name: ' + (senderName || '[Your name]'),
       '- Email: ' + (senderEmail || '[Your email]'),
-      '',
-      'Message:',
-      senderMessage || '[Add a message here]',
       '',
       'Thank you,',
       senderName || '[Your name]'
@@ -289,7 +313,7 @@ var SHOW_PRICES = false;
     });
   });
 
-  [nameInput, emailInput, messageInput].forEach(function (input) {
+  [nameInput, emailInput, messageInput, reachingForInput, preferredContactInput].forEach(function (input) {
     if (!input) return;
     input.addEventListener('input', updateDirectEmailLink);
     input.addEventListener('change', updateDirectEmailLink);
@@ -318,12 +342,8 @@ var SHOW_PRICES = false;
       return;
     }
 
-    var senderMessage = getFieldValue(messageInput);
-    var planInfo = 'Plan: ' + getSelectedPlanDescription() + '\n' +
-                   'Add-On: ' + getSelectedAddOnDescription() + '\n\n';
-    
     if (messageHiddenInput) {
-      messageHiddenInput.value = planInfo + 'Message:\n' + senderMessage;
+      messageHiddenInput.value = buildContactSummaryLines().join('\n');
     }
 
     isSubmitting = true;
@@ -333,7 +353,7 @@ var SHOW_PRICES = false;
     function finalizeSuccess() {
       contactForm.classList.remove('is-submitting');
       contactForm.classList.add('is-submitted');
-      [nameInput, emailInput, messageInput].forEach(function (input) {
+      [nameInput, emailInput, messageInput, reachingForInput, preferredContactInput].forEach(function (input) {
         if (input) input.disabled = true;
       });
       if (formStatus) formStatus.hidden = false;
