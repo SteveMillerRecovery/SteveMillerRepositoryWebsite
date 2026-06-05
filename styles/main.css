@@ -651,14 +651,11 @@ body.hide-prices .service-card .desc {
   grid-template-columns: 1fr;
   gap: 1.25rem;
   align-items: start;
-  max-width: 58rem;
-  margin: 0 auto;
 }
 .audience-copy,
 .audience-intro {
   max-width: 100%;
 }
-.audience-copy h2,
 .audience-intro h2,
 .audience-heading {
   font-family: var(--font-headline);
@@ -682,6 +679,7 @@ body.hide-prices .service-card .desc {
 .audience-list {
   display: grid;
   gap: 0.85rem;
+  max-width: 58rem;
 }
 .audience-checklist li,
 .audience-list li {
@@ -715,8 +713,7 @@ body.hide-prices .service-card .desc {
 .families-section {
   background: var(--surface-low);
 }
-.families .section-inner,
-.families-section .section-inner {
+.families .section-inner {
   max-width: 72rem;
 }
 .families-content,
@@ -724,13 +721,11 @@ body.hide-prices .service-card .desc {
   max-width: 52rem;
 }
 .families-content h2,
-.families-copy h2,
-.families-heading {
+.families-copy h2 {
   font-family: var(--font-headline);
   font-size: var(--section-heading-size);
   font-weight: 700;
   line-height: 1.15;
-  margin-bottom: 1.25rem;
 }
 .families-content p,
 .families-copy p,
@@ -812,13 +807,15 @@ body.hide-prices .service-card .desc {
   background: var(--surface-low);
 }
 .free-consultation-copy h2,
-.consultation-copy h2,
-.consultation-heading {
+.consultation-copy h2 {
   font-family: var(--font-headline);
   font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 700;
   line-height: 1.15;
   margin-bottom: 1rem;
+}
+.consultation-heading {
+  margin-bottom: 2rem;
 }
 .free-consultation-copy p,
 .consultation-copy p,
@@ -868,19 +865,14 @@ body.hide-prices .service-card .desc {
 
 /* ===== FAQ ===== */
 .faq .section-inner,
-.faq-section .section-inner,
 .faq-inner {
   max-width: 50rem;
 }
-.faq-heading,
-.faq h2,
-.faq-section h2 {
+.faq h2 {
   font-family: var(--font-headline);
   font-size: var(--section-heading-size);
   font-weight: 700;
   line-height: 1.15;
-  text-align: center;
-  margin-bottom: 1rem;
 }
 .faq-lede,
 .faq-intro {
@@ -894,6 +886,7 @@ body.hide-prices .service-card .desc {
 .faq-list {
   display: grid;
   gap: 0.75rem;
+  max-width: 50rem;
 }
 .faq details,
 .faq-section details,
@@ -1555,11 +1548,6 @@ body.hide-prices .service-card .desc {
   .free-consultation-actions a,
   .consultation-actions a {
     width: 100%;
-  }
-  .faq-heading,
-  .faq h2,
-  .faq-section h2 {
-    text-align: left;
   }
   .faq-lede,
   .faq-intro {
